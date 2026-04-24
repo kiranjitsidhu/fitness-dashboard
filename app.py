@@ -21,7 +21,7 @@ st.title("🏋️‍♂️ ProLift: Your Progress Dashboard")
 st.markdown("---")
 
 # 1. Load your CSV data
-df = pd.read_csv('MasterWorkouts - Sheet1.csv')
+df = pd.read_csv('MasterWorkouts.csv')
 
 # Ensure Date is correct
 df['Date'] = pd.to_datetime(df['Date'])
