@@ -9,10 +9,18 @@ st.title("🏋️‍♂️ ProLift: Your Progress Dashboard")
 st.markdown("---")
 
 # 1. Load your CSV data
-# Assuming your file is 'MasterWorkouts.csv'
-df = pd.read_csv('MasterWorkouts.csv')
+df = pd.read_csv('MasterWorkouts - Sheet1.csv')
+
+# Ensure Date is correct
 df['Date'] = pd.to_datetime(df['Date'])
-df['Weight'] = df['Weight'].str.replace(' lbs', '').astype(float)
+
+# Clean the Weight column safely
+# This converts to string, removes 'lbs', handles empty values, and turns it into a number
+df['Weight'] = df['Weight'].astype(str).str.replace(' lbs', '', case=False)
+df['Weight'] = pd.to_numeric(df['Weight'].replace(['nan', 'None', ''], '0'))
+
+# Clean the Reps column (ensure it's a number)
+df['Reps'] = pd.to_numeric(df['Reps'], errors='coerce').fillna(0)
 
 # 2. Key Metric: Estimated 1-Rep Max (Brzycki Formula)
 # This shows 'Strength' even if reps/weight change
