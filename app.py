@@ -1,7 +1,19 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
 
+# Find any CSV file in the folder so we don't have to worry about exact names
+files = [f for f in os.listdir('.') if f.endswith('.csv')]
+
+if not files:
+    st.error("No CSV file found in the repository! Please upload your MasterWorkouts file.")
+    st.stop()
+else:
+    # Loads the first CSV it finds
+    df = pd.read_csv(files[0])
+    st.sidebar.success(f"Loaded: {files[0]}")
+    
 # Set Page Config for that "Dark Mode" Fitness look
 st.set_page_config(page_title="ProLift Analytics", layout="wide")
 
